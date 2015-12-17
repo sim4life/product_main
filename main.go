@@ -44,14 +44,13 @@ func main() {
 		grocsCategories.PrintValues()
 		fmt.Println("================Testing Groceries Categories---------End\n\n")
 	}
-	/*
-		ideasCategories := readFile("ideas_categories.txt", product.ParseCategoriesFile)
-		if ideasCategories != nil {
-			fmt.Println("Start================Testing Ideas Categories---------\n\n")
-			ideasCategories.PrintValues()
-			fmt.Println("================Testing Ideas Categories---------End\n\n")
-		}
-	*/
+
+	ideasCategories := readFile("ideas_categories.txt", product.ParseCategoriesFile)
+	if ideasCategories != nil {
+		fmt.Println("Start================Testing Ideas Categories---------\n\n")
+		// ideasCategories.PrintValues()
+		fmt.Println("================Testing Ideas Categories---------End\n\n")
+	}
 
 	if products := readFile("product_data.txt", product.ParseProductFile); products != nil {
 		fmt.Println("Start===========Testing Products-----------\n\n")
@@ -60,9 +59,13 @@ func main() {
 		if ok {
 			groc_categories_map, ok := grocsCategories.(product.MapCategories)
 			if ok {
-
 				prods.FlattenGroceriesCategories(groc_categories_map)
 			}
+			idea_categories_map, ok := ideasCategories.(product.MapCategories)
+			if ok {
+				prods.FlattenIdeasCategories(idea_categories_map)
+			}
+
 		}
 
 		// prods.PrintValues()
