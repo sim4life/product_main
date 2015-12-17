@@ -38,11 +38,37 @@ func main() {
 	//fmt.Println("host = ", *host)
 
 	//TODO: perform error handling
-	// cat_map := readFile("grocery_categories.txt", product.ParseCategoriesFile)
-	// readFile("ideas_categories.txt", parseIdeasCategoriesFile)
-	if products := readFile("product_data.txt", product.ParseProductFile); products != nil {
-		products.PrintValues()
-		fmt.Println("Testing")
+	grocsCategories := readFile("grocery_categories.txt", product.ParseCategoriesFile)
+	if grocsCategories != nil {
+		fmt.Println("Start================Testing Groceries Categories---------\n\n")
+		grocsCategories.PrintValues()
+		fmt.Println("================Testing Groceries Categories---------End\n\n")
 	}
+	/*
+		ideasCategories := readFile("ideas_categories.txt", product.ParseCategoriesFile)
+		if ideasCategories != nil {
+			fmt.Println("Start================Testing Ideas Categories---------\n\n")
+			ideasCategories.PrintValues()
+			fmt.Println("================Testing Ideas Categories---------End\n\n")
+		}
+	*/
+
+	if products := readFile("product_data.txt", product.ParseProductFile); products != nil {
+		fmt.Println("Start===========Testing Products-----------\n\n")
+		// products.PrintValues()
+		prods, ok := products.(product.Products)
+		if ok {
+			groc_categories_map, ok := grocsCategories.(product.MapCategories)
+			if ok {
+
+				prods.FlattenGroceriesCategories(groc_categories_map)
+			}
+		}
+
+		// prods.PrintValues()
+		prods.PrintJSON()
+		fmt.Println("===========Testing Products-----------End\n\n")
+	}
+
 	// product.PrintCategoryMap(cat_map)
 }
